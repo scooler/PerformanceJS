@@ -11,6 +11,12 @@
   }, tearDownArray = function(){
     delete this.arr1;
     delete this.arr2;
+  }, randomObject = function(range, length){
+    var i, rand = Math.random, fl = Math.floor, result = {};
+    for (i = length; i--;){
+      result[fl(rand() * range) + ""] = undefined;
+    }  
+    return result;
   };
 
 
@@ -37,6 +43,41 @@
     },
     setUp: setupArray,
     tearDown: tearDownArray
+  },
+  {
+    name: "Mergin 2 sorted arrays with underscore.js' sortBy and uniq-sorted",
+    test: function(){
+      var arr1 = this.arr1, arr2 = this.arr2;
+      arr1[arr1.length] = arr2;
+      arr1 = _.flatten(arr1);
+      arr1 = _.sortBy(arr1, function(el){ return el });
+      return _.uniq(arr1, true).length;
+    },
+    setUp: function(){
+      setupArray.apply(this);
+      this.arr1 = _.sortBy(this.arr1, function(el){ return el })
+      this.arr2 = _.sortBy(this.arr2, function(el){ return el })
+    },
+    tearDown: tearDownArray
+  },
+  {
+    name: "Mergin 2 objects and counting their properties",
+    test: function(){
+      var obj1 = this.obj1, obj2 = this.obj2, length = 0;
+      _.each(obj2, function(key, val){
+        obj1[key]=val;
+      });
+      _.each(obj1, function(key, val){ length ++ });
+      return length;
+    },
+    setUp: function(){
+      this.obj1 = randomObject(2500, 3000);
+      this.obj2 = randomObject(2500, 3000);
+    },
+    tearDown: function(){
+      delete this.obj1;
+      delete this.obj2;
+    }
   }
   ])
 })();
