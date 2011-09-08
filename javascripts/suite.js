@@ -39,15 +39,3 @@ PerfJS.suite = function(name, tests){
 
   return that;
 };
-
-PerfJS.async = function(callback, interval){
-  var i = 0; 
-  interval = interval || 25;
-  function runner(){
-    if (callback(i)){
-      i++;
-      setTimeout(runner, interval);
-    }
-  }
-  runner();
-}

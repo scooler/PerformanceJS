@@ -29,11 +29,11 @@
       
 }());
 
-$(function(){
-  $("#run_tests").click(function(e){
+PerfJS.addEvent(window, "load", function(){
+  var el = document.getElementById("run_tests");
+  PerfJS.addEvent(el, "click", function(e){
     e.preventDefault();
-    e.stopPropagation();
     PerfJS.runTests();
-  })
+  });
 });
 
