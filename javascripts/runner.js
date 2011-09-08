@@ -26,7 +26,7 @@ PerformanceJS = {};
     }
   };
 
-  runTests = function(){
+  var runTests = function(){
     tuneTests();
     var i, j, testResult;
     for (i = 0; i < testSuites.length; i++){
@@ -40,7 +40,7 @@ PerformanceJS = {};
     }
   };
 
-  runTest = function(testCase, loopCount){
+  var runTest = function(testCase, loopCount){
     var testStart, testEnd, i;
     testCase.setUp();
     testStart = new Date().getTime();
@@ -53,6 +53,12 @@ PerformanceJS = {};
   }
 
   PerformanceJS.runTests = runTests;
+  $(function(){
+    $("#run_tests").click(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      PerformanceJS.runTests();
+    })
+  })
 }());
 
-window.onload = PerformanceJS.runTests;
