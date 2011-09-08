@@ -5,23 +5,26 @@
       result.push(fl(rand() * range) + "");
     }  
     return result;
-  }, setupArray = function(){
-    this.arr1 = randomArray(2500, 3000);
-    this.arr2 = randomArray(2500, 3000);
-  }, tearDownArray = function(){
-    delete this.arr1;
-    delete this.arr2;
-  }, randomObject = function(range, length){
-    var i, rand = Math.random, fl = Math.floor, result = {};
-    for (i = length; i--;){
-      result[fl(rand() * range) + ""] = undefined;
-    }  
-    return result;
-  };
+  }, 
+    setupArray = function(){
+      this.arr1 = randomArray(2500, 3000);
+      this.arr2 = randomArray(2500, 3000);
+    }, 
+    tearDownArray = function(){
+      delete this.arr1;
+      delete this.arr2;
+    }, 
+    randomObject = function(range, length){
+      var i, rand = Math.random, fl = Math.floor, result = {};
+      for (i = length; i--;){
+        result[fl(rand() * range) + ""] = undefined;
+      }  
+      return result;
+    };
 
+  var suite = PerfJS.suite("Object and Array merging (keeping uniqness)");
 
-  PerfJS.addTestCase("Object and Array merging (keeping uniqness)", [
-  {
+  suite.add({
     name: "Mergin 2, unsorted arrays with underscore.js' uniq",
     test: function(){
       var arr1 = this.arr1, arr2 = this.arr2;
@@ -31,8 +34,9 @@
     },
     setUp: setupArray,
     tearDown: tearDownArray
-  },
-  {
+  });
+
+  suite.add({
     name: "Mergin 2, unsorted arrays with underscore.js' sortBy and uniq-sorted",
     test: function(){
       var arr1 = this.arr1, arr2 = this.arr2;
@@ -43,8 +47,8 @@
     },
     setUp: setupArray,
     tearDown: tearDownArray
-  },
-  {
+  });
+  suite.add({
     name: "Mergin 2 sorted arrays with underscore.js' sortBy and uniq-sorted",
     test: function(){
       var arr1 = this.arr1, arr2 = this.arr2;
@@ -59,8 +63,9 @@
       this.arr2 = _.sortBy(this.arr2, function(el){ return el })
     },
     tearDown: tearDownArray
-  },
-  {
+  });
+
+  suite.add({
     name: "Mergin 2 objects and counting their properties",
     test: function(){
       var obj1 = this.obj1, obj2 = this.obj2, length = 0;
@@ -78,6 +83,7 @@
       delete this.obj1;
       delete this.obj2;
     }
-  }
-  ])
+  });
+
+  PerfJS.addSuite(suite);
 })();
