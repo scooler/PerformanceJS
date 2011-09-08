@@ -1,6 +1,7 @@
 PerformanceJS = {};
 (function(){
-  var testSuites = []
+  var testSuites = [],
+    timeMinimum = 100;
 
   PerformanceJS.addTestCase = function(suiteName, testCases){
     testSuites.push({
@@ -25,15 +26,15 @@ PerformanceJS = {};
       multiplier++;
       loopCount = Math.pow(10, multiplier);
       testPeriod = runTest(testCase, loopCount);
-    } while (testPeriod < 10);
-    return loopCount;
+    } while (testPeriod < timeMinimum);
+    testCase.loopCount = loopCount;
   };
 
   var tuneTests = function(){
     var i, j;
     for (i = 0; i < testSuites.length; i++){
       for (j=0; j < testSuites[i].tests.length; j++){
-        testSuites[i].loopCount = Math.max( tuneTest(testSuites[i].tests[j]), testSuites[i].loopCount || 0);
+        tuneTest(testSuites[i].tests[j]);
       }
     }
   };
@@ -43,9 +44,9 @@ PerformanceJS = {};
     var i, j, testResult;
     for (i = 0; i < testSuites.length; i++){
       log("Running test suite " + testSuites[i].name);
-      log("Each test case run " + testSuites[i].loopCount + " times");
       for (j=0; j < testSuites[i].tests.length; j++){
-        testResult = runTest(testSuites[i].tests[j], testSuites[i].loopCount);
+        log("Test case run " + testSuites[i].tests[j].loopCount + " times");
+        testResult = runTest(testSuites[i].tests[j]);
         log("Test case result: " + testSuites[i].tests[j].name + ": " + testResult);
         testSuites[i].tests[j].result = testResult;
       }
@@ -53,7 +54,7 @@ PerformanceJS = {};
   };
 
   var runTest = function(testCase, loopCount){
-    var testStart, testEnd, i;
+    var testStart, testEnd, i, loopCount = loopCount || testCase.loopCount;
     testCase.setUp();
     testStart = new Date().getTime();
     for (i = 0; i < loopCount; i++){
