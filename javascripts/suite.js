@@ -19,7 +19,7 @@ PerfJS.suite = function(name, tests){
       test = tests[i];
       PerfJS.log("Test case run " + test.loopCount + " times");
       test.run();
-      PerfJS.log("Test case result: " + test.name + ": " + test.result);
+      PerfJS.log("Test case average result: " + test.name + ": " + test.result/test.loopCount+"ms");
       return true;
     }
   }
