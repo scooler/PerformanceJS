@@ -1,11 +1,23 @@
 PerformanceJS = {};
 (function(){
-  var testSuites = [];
+  var testSuites = []
+
   PerformanceJS.addTestCase = function(suiteName, testCases){
     testSuites.push({
       "name": suiteName,
       "tests": testCases});
   };
+
+  var resultsDiv = (function(){
+    var cache;
+    return function(){
+      return cache || (cache = $("#test_results"));
+    }
+  })();
+
+  var log = function(message){
+    resultsDiv().append("<div>"+message+"</div>");
+  }
 
   var tuneTest = function(testCase){
     var multiplier = -1, testPeriod, loopCount;
@@ -30,11 +42,11 @@ PerformanceJS = {};
     tuneTests();
     var i, j, testResult;
     for (i = 0; i < testSuites.length; i++){
-      console.log("Running test suite " + testSuites[i].name);
-      console.log("Each test case run " + testSuites[i].loopCount + " times");
+      log("Running test suite " + testSuites[i].name);
+      log("Each test case run " + testSuites[i].loopCount + " times");
       for (j=0; j < testSuites[i].tests.length; j++){
         testResult = runTest(testSuites[i].tests[j], testSuites[i].loopCount);
-        console.log("Test case result: " + testSuites[i].tests[j].name + ": " + testResult);
+        log("Test case result: " + testSuites[i].tests[j].name + ": " + testResult);
         testSuites[i].tests[j].result = testResult;
       }
     }
