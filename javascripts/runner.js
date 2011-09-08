@@ -34,7 +34,7 @@ PerformanceJS = {};
       console.log("Each test case run " + testSuites[i].loopCount + " times");
       for (j=0; j < testSuites[i].tests.length; j++){
         testResult = runTest(testSuites[i].tests[j], testSuites[i].loopCount);
-        console.log("Test case " + testSuites[i].tests[j].name + " result: " + testResult);
+        console.log("Test case result: " + testSuites[i].tests[j].name + ": " + testResult);
         testSuites[i].tests[j].result = testResult;
       }
     }
