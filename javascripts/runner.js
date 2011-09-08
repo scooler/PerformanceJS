@@ -13,11 +13,11 @@
     for (i = 0; i < length; i++){
       testSuites[i].tune();
     }
-    setTimeout(processTests, 1);
   };
 
   var runTests = function(){
-    setTimeout(tuneTests, 1);
+    tuneTests();
+    processTests();
   };
 
 
