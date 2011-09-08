@@ -1,4 +1,4 @@
-PerformanceJS.addTestCase("Global variables", [
+PerfJS.addTestCase("Global variables", [
 {
   name: "One additional global variables",
   test: function(){

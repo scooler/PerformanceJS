@@ -20,7 +20,7 @@
   };
 
 
-  PerformanceJS.addTestCase("Object and Array merging (keeping uniqness)", [
+  PerfJS.addTestCase("Object and Array merging (keeping uniqness)", [
   {
     name: "Mergin 2, unsorted arrays with underscore.js' uniq",
     test: function(){
