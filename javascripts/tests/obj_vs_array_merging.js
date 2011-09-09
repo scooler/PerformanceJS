@@ -69,10 +69,10 @@
     name: "Mergin 2 objects and counting their properties",
     test: function(){
       var obj1 = this.obj1, obj2 = this.obj2, length = 0;
-      _.each(obj2, function(key, val){
+      _.each(obj2, function(val, key){
         obj1[key]=val;
       });
-      _.each(obj1, function(key, val){ length ++ });
+      _.each(obj1, function(val, key){ length ++ });
       return length;
     },
     setUp: function(){
