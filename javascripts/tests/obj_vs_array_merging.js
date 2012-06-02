@@ -21,7 +21,7 @@
       }  
       return result;
     };
-
+  define(["javascripts/tests/lib/underscore.js"]);
   var suite = PerfJS.suite("Object and Array merging (keeping uniqness)");
 
   suite.add({
